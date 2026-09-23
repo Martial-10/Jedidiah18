@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy 18th Birthday, Jedidiah</title>
+<meta name="description" content="An 18th birthday surprise for Houssou Jedidiah Ebunoluwa.">
+<meta name="theme-color" content="#15103d">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Unbounded:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #15103d;
+    --night-2: #211a5c;
+    --gold: #ffc233;
+    --pink: #ff4d8d;
+    --mint: #4debc0;
+    --paper: #fff7fb;
+    --muted: #bdb6ea;
+    --display: 'Unbounded', 'Arial Black', 'Segoe UI Black', system-ui, sans-serif;
+    --body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color-scheme: dark;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); background: var(--night); }
+  *, *::before, *::after { box-sizing: inherit; }
+  body {
+    margin: 0;
+    background: var(--night);
+    color: var(--paper);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  :focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
+
+  #confetti {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 50;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: 100svh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 2rem 1.25rem 3rem;
+    position: relative; isolation: isolate;
+  }
+  .numwrap { position: relative; }
+  .numwrap::before {
+    content: ""; position: absolute; inset: -35%; z-index: -1;
+    background: radial-gradient(closest-side, rgba(255, 194, 51, .2), transparent);
+  }
+  .num {
+    --h: 1.08em;
+    display: flex; justify-content: center;
+    margin: 0;
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(7rem, min(40vw, 30svh), 20rem);
+    line-height: 1;
+    color: var(--gold);
+    text-shadow: .045em .045em 0 var(--pink);
+  }
+  .digit { display: block; height: var(--h); overflow: hidden; padding: 0 .07em 0 .02em; }
+  .cell { display: block; height: var(--h); line-height: var(--h); }
+  .roll { display: block; transition: transform .9s cubic-bezier(.2, .8, .2, 1); }
+  .rolled .roll { transform: translateY(calc(var(--h) * -1)); }
+
+  .copy { max-width: 36rem; margin-top: 1.25rem; }
+  .copy h1 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(1.35rem, 4.2vw, 2.25rem);
+    line-height: 1.2; margin: 0 0 .75rem; text-wrap: balance;
+  }
+  .fullname { margin: 0; font-weight: 700; font-size: 1.125rem; }
+  .date { margin: .15rem 0 0; color: var(--muted); }
+
+  .unlock-wrap { margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: .9rem; }
+  .hint { margin: 0; color: var(--muted); max-width: 20rem; }
+
+  .js .copy, .js .unlock-wrap {
+    opacity: 0; transform: translateY(14px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .js .unlock-wrap { transition-delay: .25s; pointer-events: none; }
+  .ready .copy, .ready .unlock-wrap { opacity: 1; transform: none; }
+  .ready .unlock-wrap { pointer-events: auto; }
+
+  .unlock {
+    position: relative; width: 9.5rem; height: 9.5rem; padding: 0;
+    display: grid; place-items: center;
+    border: 0; border-radius: 50%;
+    background: var(--night-2); color: var(--paper);
+    font: 700 1rem/1.2 var(--body);
+    cursor: pointer;
+    touch-action: none;
+    user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .15s ease;
+  }
+  .unlock:active { transform: scale(.97); }
+  .ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); pointer-events: none; }
+  .ring circle { fill: none; stroke-width: 7; }
+  .ring .track { stroke: rgba(255, 247, 251, .18); }
+  .ring .prog { stroke: var(--gold); stroke-linecap: round; stroke-dasharray: 339.3; stroke-dashoffset: 339.3; }
+  .unlock.done .prog { stroke: var(--mint); }
+  .unlock-label { position: relative; max-width: 5.5rem; pointer-events: none; }
+
+  /* ---------- Revealed content ---------- */
+  .reveal.in { animation: rise .7s ease both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+  .wrap { width: min(62rem, 100% - 2.5rem); margin-inline: auto; }
+  .block { padding-block: clamp(3.5rem, 9vw, 6.5rem); }
+  h2 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(1.6rem, 4.4vw, 2.6rem);
+    line-height: 1.15; margin: 0; text-wrap: balance;
+  }
+  .lede { color: var(--muted); margin: .9rem 0 0; max-width: 34rem; }
+
+  .letter { display: grid; gap: 1.5rem 4rem; grid-template-columns: 1fr; }
+  .letter p { margin: 0 0 1rem; max-width: 34rem; font-size: 1.1875rem; }
+  .letter p:last-child { margin-bottom: 0; }
+
+  .wishes { display: grid; gap: 1.5rem; grid-template-columns: 1fr; margin-top: 2rem; }
+  .wish-panel {
+    background: var(--night-2); border-radius: 1.25rem; padding: 1.5rem;
+    min-height: 12rem; display: flex; flex-direction: column; justify-content: space-between; gap: 1rem;
+  }
+  .wish-count { margin: 0; color: var(--muted); font-size: .95rem; }
+  .wish-text { margin: 0; font-weight: 600; font-size: clamp(1.25rem, 2.8vw, 1.75rem); line-height: 1.3; }
+  .swap { animation: swap .35s ease; }
+  @keyframes swap { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .picker { display: grid; grid-template-columns: repeat(6, 1fr); gap: .6rem; align-content: start; }
+  .pick {
+    aspect-ratio: 1; padding: 0;
+    border-radius: 50%; border: 2px solid rgba(255, 247, 251, .3);
+    background: transparent; color: var(--paper);
+    font: 700 1rem var(--body); cursor: pointer;
+    transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+  }
+  .pick:hover { border-color: var(--paper); }
+  .pick.visited { border-color: var(--mint); background: rgba(77, 235, 192, .16); }
+  .pick.current { background: var(--gold); border-color: var(--gold); color: var(--night); }
+  .all-done { margin: 1.25rem 0 0; color: var(--mint); font-weight: 600; }
+
+  .make-wish { display: grid; gap: 2rem 4rem; grid-template-columns: 1fr; align-items: center; }
+  .wish-msg { min-height: 1.6em; margin: 1rem 0 0; color: var(--gold); font-weight: 700; }
+  .candle {
+    display: block; width: min(17rem, 72vw); padding: 0; border: 0; background: none;
+    cursor: pointer; justify-self: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .candle svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .flame { transform-box: fill-box; transform-origin: 50% 100%; animation: flicker 1.1s ease-in-out infinite; }
+  @keyframes flicker {
+    0%, 100% { transform: scaleY(1) rotate(-1.5deg); }
+    50% { transform: scaleY(1.09) rotate(1.5deg); }
+  }
+  .candle.out .flame { animation: puff .3s ease-in forwards; }
+  @keyframes puff { to { transform: scale(0); opacity: 0; } }
+  .smoke { opacity: 0; }
+  .candle.out .smoke { animation: smoke 1.8s ease-out .15s forwards; }
+  @keyframes smoke {
+    0% { opacity: .75; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-26px); }
+  }
+
+  .foot { padding: 1rem 0 clamp(3rem, 8vw, 5rem); }
+  .foot p { margin: 0 0 1.25rem; font-family: var(--display); font-weight: 600; font-size: clamp(1.15rem, 3vw, 1.6rem); line-height: 1.3; max-width: 30rem; }
+  .btn {
+    background: var(--gold); color: var(--night);
+    border: 0; border-radius: 999px; padding: .85rem 1.6rem;
+    font: 700 1rem var(--body); cursor: pointer;
+    transition: background-color .2s ease;
+  }
+  .btn:hover { background: #ffd35f; }
+
+  @media (min-width: 52rem) {
+    .letter { grid-template-columns: 1fr 1.15fr; }
+    .wishes { grid-template-columns: 1.1fr 1fr; align-items: start; }
+    .make-wish { grid-template-columns: 1.1fr 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<main>
+  <header class="hero" id="hero">
+    <div class="numwrap">
+      <p class="num" id="num" aria-hidden="true">
+        <span class="digit"><span class="cell">1</span></span>
+        <span class="digit"><span class="roll"><span class="cell">7</span><span class="cell">8</span></span></span>
+      </p>
+    </div>
+
+    <div class="copy">
+      <h1>Happy 18th birthday, Jedidiah</h1>
+      <p class="fullname">Houssou Jedidiah Ebunoluwa</p>
+      <p class="date">23 September 2026</p>
+    </div>
+
+    <div class="unlock-wrap">
+      <button class="unlock" id="unlock" type="button" aria-label="Press and hold to unlock your gift">
+        <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="track" cx="60" cy="60" r="54"></circle>
+          <circle class="prog" id="prog" cx="60" cy="60" r="54"></circle>
+        </svg>
+        <span class="unlock-label" id="unlockLabel">Hold to unlock</span>
+      </button>
+      <p class="hint" id="hint">There is a gift inside. Press and hold to open it.</p>
+    </div>
+  </header>
+
+  <div class="reveal" id="reveal">
+    <section class="block" id="letter" aria-labelledby="letterTitle">
+      <div class="wrap letter">
+        <h2 id="letterTitle">You made it to 18.</h2>
+        <div>
+          <p>Jedidiah, today the world starts treating you like an adult. It also starts handing you keys: your own decisions, your own plans, your own voice.</p>
+          <p>Your names already say what you are. Jedidiah means beloved of God. Ebunoluwa means gift of God. Eighteen years in, that still sounds exactly right.</p>
+          <p>Use the keys well, be bold with them, and remember you have people behind you. I'm proud to call you my friend.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="wishesTitle">
+      <div class="wrap">
+        <h2 id="wishesTitle">Eighteen wishes for eighteen years.</h2>
+        <p class="lede">Tap a number to open a wish. See if you can open all of them.</p>
+        <div class="wishes">
+          <div class="wish-panel" aria-live="polite">
+            <p class="wish-count" id="wishCount">18 wishes waiting</p>
+            <p class="wish-text" id="wishText">Pick any number to begin.</p>
+          </div>
+          <div class="picker" id="picker"></div>
+        </div>
+        <p class="all-done" id="allDone" hidden>All eighteen opened. Every one of them is meant.</p>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="candleTitle">
+      <div class="wrap make-wish">
+        <div>
+          <h2 id="candleTitle">Now make your own.</h2>
+          <p class="lede">Close your eyes and think of one thing you want this year. Then tap the candle.</p>
+          <p class="wish-msg" id="wishMsg" aria-live="polite"></p>
+        </div>
+        <button class="candle" id="candle" type="button" aria-label="Blow out the candle and make a wish">
+          <svg viewBox="0 0 260 250" aria-hidden="true">
+            <ellipse cx="130" cy="224" rx="116" ry="16" fill="#2e2578"/>
+            <rect x="45" y="138" width="170" height="82" rx="16" fill="#ff4d8d"/>
+            <path d="M45 158 V156 Q45 138 63 138 H197 Q215 138 215 156 V158 Q207 176 199 158 Q191 182 181 158 Q171 176 163 158 Q153 184 143 158 Q133 176 125 158 Q115 182 105 158 Q95 176 87 158 Q79 180 71 158 Q58 174 45 158 Z" fill="#fff7fb"/>
+            <text x="130" y="205" text-anchor="middle" font-family="Unbounded, Arial Black, sans-serif" font-weight="800" font-size="34" fill="#ffc233">18</text>
+            <rect x="122" y="88" width="16" height="52" rx="3" fill="#4debc0"/>
+            <rect x="122" y="104" width="16" height="6" fill="#15103d" opacity=".25"/>
+            <rect x="122" y="120" width="16" height="6" fill="#15103d" opacity=".25"/>
+            <g class="flame">
+              <path d="M130 48 C142 62 146 74 130 88 C114 74 118 62 130 48 Z" fill="#ffc233"/>
+              <path d="M130 66 C136 74 137 80 130 88 C123 80 124 74 130 66 Z" fill="#ff4d8d"/>
+            </g>
+            <path class="smoke" d="M130 82 q-8 -12 0 -22 q8 -10 0 -22" fill="none" stroke="#fff7fb" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <footer class="block foot">
+      <div class="wrap">
+        <p>Happy birthday, Jedidiah. With love, Madara.</p>
+        <button class="btn" id="more" type="button">Throw more confetti</button>
+      </div>
+    </footer>
+  </div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ===== Edit the wishes here ===== */
+  var WISHES = [
+    'May 18 feel exactly as good as you imagined it would.',
+    'May you always know you are beloved. Your name says so.',
+    'May the doors you knock on open faster than you expect.',
+    'May your friends cheer loudly for you, and may you cheer just as loudly back.',
+    'May you get comfortable being new at things.',
+    'May your mistakes be small, quick to fix and great stories later.',
+    'May you find work you would do for free, and get paid well for it anyway.',
+    'May your curiosity never get tired.',
+    'May you be brave enough to start before you feel ready.',
+    'May rest come easily, with no guilt attached.',
+    'May your kindness always be louder than your fear.',
+    'May you keep the people who knew you before you were "grown".',
+    'May every exam, interview and application go your way.',
+    'May you laugh at least once a week until your stomach hurts.',
+    'May you protect your peace like it is your job.',
+    'May the world give you room to grow into everything you are becoming.',
+    'May you never forget you are Ebunoluwa: a gift.',
+    'May the next 18 years make this one look like the warm-up.'
+  ];
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (id) { return document.getElementById(id); };
+
+  var hero = $('hero'), numEl = $('num'), reveal = $('reveal');
+  var unlockBtn = $('unlock'), prog = $('prog'), unlockLabel = $('unlockLabel'), hint = $('hint');
+  var picker = $('picker'), wishText = $('wishText'), wishCount = $('wishCount'), allDone = $('allDone');
+  var candle = $('candle'), wishMsg = $('wishMsg'), more = $('more');
+
+  reveal.hidden = true;
+
+  /* ===== Confetti ===== */
+  var cv = $('confetti'), ctx = cv.getContext('2d');
+  var W = 0, H = 0, parts = [], last = 0, raf = 0;
+  var COLORS = ['#ffc233', '#ff4d8d', '#4debc0', '#fff7fb', '#8c7bff'];
+
+  function size() {
+    var d = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = W * d; cv.height = H * d;
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+  }
+  size();
+  window.addEventListener('resize', size);
+
+  function burst(x, y, n, opts) {
+    if (reduce) return;
+    opts = opts || {};
+    var spread = opts.spread || Math.PI * 2;
+    var base = opts.angle == null ? -Math.PI / 2 : opts.angle;
+    var power = opts.power || 700;
+    for (var i = 0; i < n; i++) {
+      var a = base + (Math.random() - 0.5) * spread;
+      var s = power * (0.35 + Math.random() * 0.65);
+      parts.push({
+        x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s,
+        w: 6 + Math.random() * 7, h: 4 + Math.random() * 6,
+        r: Math.random() * 6.28, vr: (Math.random() - 0.5) * 12,
+        c: COLORS[Math.floor(Math.random() * COLORS.length)],
+        round: Math.random() < 0.25, t: 0, ttl: 2.4 + Math.random() * 1.4, ph: Math.random() * 6.28
+      });
+    }
+    if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
+  }
+
+  function frame(now) {
+    var dt = Math.min(0.033, (now - last) / 1000);
+    last = now;
+    ctx.clearRect(0, 0, W, H);
+    parts = parts.filter(function (p) {
+      p.t += dt;
+      p.vy += 900 * dt;
+      var drag = 1 - 2.2 * dt;
+      p.vx *= drag; p.vy *= drag;
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      p.r += p.vr * dt;
+      var fade = p.t > p.ttl * 0.7 ? 1 - (p.t - p.ttl * 0.7) / (p.ttl * 0.3) : 1;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.r);
+      ctx.globalAlpha = Math.max(0, fade);
+      ctx.fillStyle = p.c;
+      if (p.round) {
+        ctx.beginPath(); ctx.arc(0, 0, p.w / 2.2, 0, 6.283); ctx.fill();
+      } else {
+        ctx.scale(1, Math.cos(p.t * 6 + p.ph));
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      }
+      ctx.restore();
+      return p.t < p.ttl && p.y < H + 40;
+    });
+    if (parts.length) { raf = requestAnimationFrame(frame); }
+    else { raf = 0; ctx.clearRect(0, 0, W, H); }
+  }
+
+  function centerOf(el) {
+    var r = el.getBoundingClientRect();
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2, h: r.height };
+  }
+
+  /* ===== Intro: 17 rolls over to 18 ===== */
+  function playIntro() {
+    if (reduce) { hero.classList.add('rolled', 'ready'); return; }
+    setTimeout(function () {
+      hero.classList.add('rolled');
+      setTimeout(function () {
+        var c = centerOf(numEl);
+        burst(c.x, c.y, 150, { power: 950 });
+        hero.classList.add('ready');
+      }, 650);
+    }, 1200);
+  }
+  if (document.fonts && document.fonts.ready) {
+    Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 1500); })]).then(playIntro);
+  } else {
+    playIntro();
+  }
+
+  /* ===== Hold to unlock ===== */
+  var CIRC = 339.3, HOLD_MS = 1100;
+  var holding = false, unlocked = false, startT = 0, holdRaf = 0;
+
+  function setRing(p) { prog.style.strokeDashoffset = String(CIRC * (1 - p)); }
+
+  function tick(now) {
+    if (!holding) return;
+    var p = Math.min(1, (now - startT) / HOLD_MS);
+    setRing(p);
+    if (p >= 1) { unlock(); return; }
+    holdRaf = requestAnimationFrame(tick);
+  }
+
+  function release() {
+    if (!holding) return;
+    holding = false;
+    cancelAnimationFrame(holdRaf);
+    if (!unlocked) {
+      prog.style.transition = 'stroke-dashoffset .3s ease';
+      setRing(0);
+    }
+  }
+
+  unlockBtn.addEventListener('pointerdown', function (e) {
+    if (unlocked || e.button > 0) return;
+    try { unlockBtn.setPointerCapture(e.pointerId); } catch (err) {}
+    holding = true;
+    prog.style.transition = 'none';
+    startT = performance.now();
+    holdRaf = requestAnimationFrame(tick);
+  });
+  unlockBtn.addEventListener('pointerup', release);
+  unlockBtn.addEventListener('pointercancel', release);
+  unlockBtn.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+  // Keyboard and assistive tech activate with a click that has no pointer detail.
+  unlockBtn.addEventListener('click', function (e) { if (e.detail === 0) unlock(); });
+
+  function unlock() {
+    if (unlocked) return;
+    unlocked = true;
+    holding = false;
+    cancelAnimationFrame(holdRaf);
+    prog.style.transition = 'none';
+    setRing(1);
+    unlockBtn.classList.add('done');
+    unlockBtn.setAttribute('aria-label', 'Gift unlocked');
+    unlockLabel.textContent = 'Unlocked';
+    hint.textContent = 'Happy birthday! Scroll down.';
+
+    var c = centerOf(unlockBtn);
+    burst(c.x, c.y, 170, { power: 1000 });
+    setTimeout(function () {
+      burst(W * 0.1, H, 90, { angle: -Math.PI / 3, spread: 0.9, power: 1200 });
+      burst(W * 0.9, H, 90, { angle: -Math.PI * 2 / 3, spread: 0.9, power: 1200 });
+    }, 250);
+
+    reveal.hidden = false;
+    reveal.classList.add('in');
+    setTimeout(function () {
+      $('letter').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    }, 700);
+  }
+
+  /* ===== Eighteen wishes ===== */
+  var visited = {}, visitedCount = 0, current = -1;
+
+  WISHES.forEach(function (w, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'pick';
+    b.textContent = String(i + 1);
+    b.setAttribute('aria-label', 'Open wish ' + (i + 1));
+    b.addEventListener('click', function () { showWish(i); });
+    picker.appendChild(b);
+  });
+
+  function showWish(i) {
+    var btns = picker.children;
+    if (current > -1) {
+      btns[current].classList.remove('current');
+      btns[current].removeAttribute('aria-current');
+    }
+    current = i;
+    btns[i].classList.add('current');
+    btns[i].setAttribute('aria-current', 'true');
+    if (!visited[i]) {
+      visited[i] = true;
+      visitedCount++;
+      btns[i].classList.add('visited');
+    }
+    wishCount.textContent = 'Wish ' + (i + 1) + ' of ' + WISHES.length;
+    wishText.textContent = WISHES[i];
+    wishText.classList.remove('swap');
+    void wishText.offsetWidth;
+    wishText.classList.add('swap');
+
+    if (visitedCount === WISHES.length && allDone.hidden) {
+      allDone.hidden = false;
+      var c = centerOf(picker);
+      burst(c.x, c.y, 90, { power: 800 });
+    }
+  }
+
+  /* ===== Candle ===== */
+  candle.addEventListener('click', function () {
+    if (candle.classList.contains('out')) return;
+    candle.classList.add('out');
+    wishMsg.textContent = 'Wish sealed. Now go make it happen.';
+    var c = centerOf(candle);
+    burst(c.x, c.y - c.h * 0.2, 120, { power: 850 });
+  });
+
+  /* ===== More confetti ===== */
+  more.addEventListener('click', function () {
+    burst(W * 0.15, H, 100, { angle: -Math.PI / 3, spread: 0.9, power: 1200 });
+    burst(W * 0.85, H, 100, { angle: -Math.PI * 2 / 3, spread: 0.9, power: 1200 });
+    burst(W * 0.5, H, 80, { angle: -Math.PI / 2, spread: 0.7, power: 1300 });
+  });
+})();
+</script>
+</body>
+</html>
